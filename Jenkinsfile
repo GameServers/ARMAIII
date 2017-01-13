@@ -1,9 +1,11 @@
+def ARMADocker
+
 node ('Docker') {
 	stage ('Checkout') {
 		checkout scm
 	}
 	stage ('Build Docker Image') {
-		def ARMADocker=docker.build 'gameservers/arma3:latest'
+		ARMADocker=docker.build 'gameservers/arma3:latest'
 	}
 
 	stage ('push to Dockerhub') {
