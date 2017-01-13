@@ -6,7 +6,11 @@ node ('Docker') {
 		def ARMADocker=docker.build 'gameservers/arma3:latest'
 	}
 
-	//Publish docker image here when development is complete.
+	stage ('push to Dockerhub') {
+		withDockerRegistry([credentialsId: '611e19af-5b46-435b-9613-57825c983940']) {
+			ARMADocker.push 'latest'
+		}
+	}
 
 	stage ('Start server on gs1.uk.steamlug.org') {
 		withCredentials([usernamePassword(credentialsId: '141a5d20-730f-466f-b7b0-4e6118cf2f96', passwordVariable: 'SECRETKEY', usernameVariable: 'ACCESSKEY')]) {
